@@ -2,14 +2,7 @@
 Revature Foundation Project 2022 BigData
 
 ### Project Description
-A Python CLI (Command Line Interface) application.  Data should be parsed from a CSV OR JSON file and persisted to MongoDB.  The functionality of the application beyond that is up to you, but here are a few suggestions:
-- journal app
-- banking app
-- business management system
-- simple text-based game
-- productivity tool
-- ecommerce app (customers,products, categories, orders)
-- ...?
+A Python CLI (Command Line Interface) application.  Data should be parsed from a CSV OR JSON file and persisted to MongoDB.
 
 ## Application Requirements
 - Your application must perform basic CRUD (Create, Read, Update, Delete) functionality with data stored in a database
