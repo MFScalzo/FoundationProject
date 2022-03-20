@@ -6,7 +6,7 @@ def menu():
     print("1. Create Account")
     print("2. View Account")
     print("3. Deposit")
-    print("4. Withdarw")
+    print("4. Withdraw")
     print("5. Transfer")
     print("6. Delete Account")
     print("7. Load Account")
