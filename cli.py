@@ -1,4 +1,5 @@
-from mDBControl import viewAc
+from mDBControl import viewAccount, loadAccount, createAccount, deposit, withdarw, transfer, delete
+from time import sleep
 
 def menu():
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -12,7 +13,7 @@ def menu():
     print("7. Load Account")
     print("0. Exit")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    
+
     try: 
         option = int(input("Select menu option: "))
 
@@ -28,19 +29,33 @@ def main():
 
     while(True):
         optionSelected = menu()
-        if(optionSelected == 0):
+        
+        if(optionSelected == 0):        # EXIT
             print("Exiting...")
             break
 
-        if(optionSelected == 1):
+        if(optionSelected == 1):        # CREATE ACCOUNT
             print("You selected \"Create Account\".")
-            pass        # call create function here
-
-        elif(optionSelected == 2):
-            print("You selected \"View Account\".")
+            
             try:
-                num = int(input("Enter account number: "))
-                account = viewAc(num)       # viewAc is trying to find the record in the DB with the given account number
+                accName = str(input("Enter Name on Account: "))
+                accBalance = round(float(input("Enter starting Balance: ")), 2)
+                newAccount = {'name': accName, 'balance': accBalance}
+                newAccount = createAccount(newAccount)       # Creating account with given data
+
+                print(f"Name on account: {newAccount['name']}\nBalance: ${newAccount['balance']}\nAccount Number: {newAccount['accountNumber']}")
+                
+            except:
+                print("Please Enter Valid Information.")
+
+            wait()
+
+        elif(optionSelected == 2):      # VIEW ACCOUNT
+            print("You selected \"View Account\".")
+
+            try:
+                accountNumber = int(input("Enter account number: "))
+                account = viewAccount(accountNumber)
             
             except:
                 account = None
@@ -51,30 +66,68 @@ def main():
                 print(f"Balance: ${account['balance']}")
 
             else:
-                print(f"Could not find account number: {num}")
+                print(f"Could not find account number: {accountNumber}")
 
-        elif(optionSelected == 3):
+            wait()
+
+        elif(optionSelected == 3):      # DEPOSIT
             print("You selected \"Deposit\".")
-            pass        # call Deposit function here
+            accountNumber = int(input("Account Number to Deposit to: "))
+            amount = round(float(input("Amount to Deposit: ")), 2)
 
-        elif(optionSelected == 4):
+            try:
+                if(amount < 0):
+                    raise Exception("Deposit can't be Negative.")
+
+                account = deposit(accountNumber, amount)
+                print(f"New Balance: ${account['balance']}")
+
+            except Exception as e:
+                print("Error while depositing.")
+                print(e)
+
+            wait()
+
+        elif(optionSelected == 4):      # WITHDRAW
             print("You selected \"Withdraw\".")
-            pass        # call Withdraw function here
+            pass
 
-        elif(optionSelected == 5):
+            wait()
+
+        elif(optionSelected == 5):      # TRANSFER
             print("You selected \"Transfer\".")
-            pass        # call Transfer function here
+            pass
 
-        elif(optionSelected == 6):
+            wait()
+
+        elif(optionSelected == 6):      # DELETE
             print("You selected \"Delete Account\".")
-            pass        # call Delete function here
+            pass
 
-        elif(optionSelected == 7):
+            wait()
+
+        elif(optionSelected == 7):      # LOAD
             print("You selected \"Load Account\".")
-            pass        # call Load function here
+            accFile = input("Bank Account File to Load: ")
+
+            try:
+                acc = loadAccount(accFile)
+
+                print("New Account Created!")
+                print(f"Account Number: {acc['accountNumber']}")
+                print(f"Name: {acc['name']}")
+                print(f"Balance: {acc['balance']}")
+
+            except:
+                print("New Account could not be Loaded.")
+            
+            wait()
 
         else:
             print("Invalid option. Try again.")
+
+def wait():
+    input("Enter to continue...")
 
 if __name__ == "__main__":
     main()
