@@ -159,7 +159,7 @@ def main():
                 print("New Account Created!")
                 print(f"Account Number: {acc['accountNumber']}")
                 print(f"Name: {acc['name']}")
-                print(f"Balance: {acc['balance']}")
+                print(f"Balance: ${acc['balance']}")
 
             except:
                 print("New Account could not be Loaded.")
