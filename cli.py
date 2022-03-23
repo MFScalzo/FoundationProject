@@ -38,7 +38,7 @@ def main():
             
             try:
                 accName = str(input("Enter Name on Account: "))
-                accBalance = round(float(input("Enter starting Balance: ")), 2)
+                accBalance = round(float(input("Enter starting Balance: $")), 2)
                 newAccount = {'name': accName, 'balance': accBalance}
                 newAccount = createAccount(newAccount)       # Creating account with given data
 
@@ -74,7 +74,7 @@ def main():
             
             try:
                 accountNumber = int(input("Account Number to Deposit to: "))
-                amount = round(float(input("Amount to Deposit: ")), 2)
+                amount = round(float(input("Amount to Deposit: $")), 2)
 
                 if(amount < 0):
                     raise Exception("Deposit can't be Negative.")
@@ -95,7 +95,7 @@ def main():
             
             try:
                 accountNumber = int(input("Account Number to Withdraw from: "))
-                amount = round(float(input("Amount to Withdraw: ")), 2)
+                amount = round(float(input("Amount to Withdraw: $")), 2)
 
                 if(amount < 0):
                     raise Exception("Withdrawal cannot be Negative.")
@@ -120,7 +120,7 @@ def main():
             try:
                 sourceAccount = int(input("Account to withdraw from: "))
                 targetAccount = int(input("Account to deposit to: "))
-                amount = round(float(input("Amount to transfer: ")), 2)
+                amount = round(float(input("Amount to transfer: $")), 2)
 
                 if(amount < 0):
                     raise Exception("Transfer cannot be Negative.")
