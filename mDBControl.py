@@ -22,18 +22,35 @@ def createAccount(account):
     return account
 
 def deposit(accountNumber, amount):
-    total = amount + db.accounts.find_one({'accountNumber': accountNumber})['balance']
+    total = db.accounts.find_one({'accountNumber': accountNumber})['balance'] + amount
     db.accounts.update_one({'accountNumber': accountNumber}, {"$set": {"balance": total}})
     return db.accounts.find_one({'accountNumber': accountNumber})
 
 def withdarw(accountNumber, amount):
-    pass
+    total = db.accounts.find_one({'accountNumber': accountNumber})['balance'] - amount
+    if (total < 0):
+        return None
+    
+    else:
+        db.accounts.update_one({'accountNumber': accountNumber}, {"$set": {"balance": total}})
+        return db.accounts.find_one({'accountNumber': accountNumber})
 
 def transfer(srcAccount, targAccount, amount):
-    pass
+    sourceTotal = db.accounts.find_one({'accountNumber': srcAccount})['balance'] - amount
+    targetTotal = db.accounts.find_one({'accountNumber': targAccount})['balance'] + amount
+
+    if(sourceTotal < 0):
+        return None
+
+    else:
+        db.accounts.update_one({'accountNumber': srcAccount}, {"$set": {"balance": sourceTotal}})
+        db.accounts.update_one({'accountNumber': targAccount}, {"$set": {"balance": targetTotal}})
+        return True
+    
+
 
 def delete(accountNumber):
-    pass
+    return db.accounts.delete_one({"accountNumber": accountNumber})
 
 # This querys mongoDB and gets the next account number
 def getNextAccountNumber():

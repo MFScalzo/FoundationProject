@@ -1,5 +1,4 @@
 from mDBControl import viewAccount, loadAccount, createAccount, deposit, withdarw, transfer, delete
-from time import sleep
 
 def menu():
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -63,7 +62,7 @@ def main():
             if(account):
                 print(f"Account Number: {account['accountNumber']}")
                 print(f"Name: {account['name']}")
-                print(f"Balance: ${account['balance']}")
+                print(f"Balance: ${round(account['balance'], 2)}")
 
             else:
                 print(f"Could not find account number: {accountNumber}")
@@ -72,37 +71,79 @@ def main():
 
         elif(optionSelected == 3):      # DEPOSIT
             print("You selected \"Deposit\".")
-            accountNumber = int(input("Account Number to Deposit to: "))
-            amount = round(float(input("Amount to Deposit: ")), 2)
-
+            
             try:
+                accountNumber = int(input("Account Number to Deposit to: "))
+                amount = round(float(input("Amount to Deposit: ")), 2)
+
                 if(amount < 0):
                     raise Exception("Deposit can't be Negative.")
 
                 account = deposit(accountNumber, amount)
-                print(f"New Balance: ${account['balance']}")
 
             except Exception as e:
                 print("Error while depositing.")
                 print(e)
 
+            else:
+                print(f"New Balance: ${account['balance']}")
+
             wait()
 
         elif(optionSelected == 4):      # WITHDRAW
             print("You selected \"Withdraw\".")
-            pass
+            
+            try:
+                accountNumber = int(input("Account Number to Withdraw from: "))
+                amount = round(float(input("Amount to Withdraw: ")), 2)
+
+                if(amount < 0):
+                    raise Exception("Withdrawal cannot be Negative.")
+
+                account = withdarw(accountNumber, amount)
+
+                if(not account):
+                    raise Exception("Insufficient funds for withdrawal.")
+
+            except Exception as e:
+                print("Error while withdrawing.")
+                print(e)
+
+            else:
+                print(f"New Balance: ${account['balance']}")
 
             wait()
 
         elif(optionSelected == 5):      # TRANSFER
             print("You selected \"Transfer\".")
-            pass
+            
+            try:
+                sourceAccount = int(input("Account to withdraw from: "))
+                targetAccount = int(input("Account to deposit to: "))
+                amount = round(float(input("Amount to transfer: ")), 2)
+
+                if(amount < 0):
+                    raise Exception("Transfer cannot be Negative.")
+
+                result = transfer(sourceAccount, targetAccount, amount)
+
+                if(not result):
+                    raise Exception(f"Insufficient funds in Account: {sourceAccount}")
+
+            except Exception as e:
+                print("Error while transfering.")
+                print(e)
+
+            else:
+                print(f"${amount} transfered from account {sourceAccount} to account {targetAccount}.")
 
             wait()
 
         elif(optionSelected == 6):      # DELETE
             print("You selected \"Delete Account\".")
-            pass
+            accountNumber = int(input("Account Number to Delete: "))
+            result = delete(accountNumber)
+            print(f"Account Number {accountNumber} deleted.")
 
             wait()
 
