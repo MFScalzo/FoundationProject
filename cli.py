@@ -42,7 +42,9 @@ def main():
                 newAccount = {'name': accName, 'balance': accBalance}
                 newAccount = createAccount(newAccount)       # Creating account with given data
 
-                print(f"Name on account: {newAccount['name']}\nBalance: ${newAccount['balance']}\nAccount Number: {newAccount['accountNumber']}")
+                print(f"Name on account: {newAccount['name']}")
+                print(f"Balance: ${newAccount['balance']}")
+                print(f"Account Number: {newAccount['accountNumber']}")
                 
             except:
                 print("Please Enter Valid Information.")
