@@ -1,4 +1,4 @@
-from mDBControl import viewAccount, loadAccount, createAccount, deposit, withdarw, transfer, delete
+from mDBControl import viewAccount, loadAccount, createAccount, deposit, withdarw, transfer, delete, disconnect
 
 def menu():
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -30,6 +30,7 @@ def main():
         optionSelected = menu()
         
         if(optionSelected == 0):        # EXIT
+            disconnect()
             print("Exiting...")
             break
 

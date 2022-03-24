@@ -48,9 +48,12 @@ def transfer(srcAccount, targAccount, amount):
         return True
     
 
-
 def delete(accountNumber):
     return db.accounts.delete_one({"accountNumber": accountNumber})
+
+def disconnect():
+    client.close()
+    print("Closed DB Connection.")
 
 # This querys mongoDB and gets the next account number
 def getNextAccountNumber():
