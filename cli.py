@@ -43,7 +43,7 @@ def main():
                 newAccount = createAccount(newAccount)       # Creating account with given data
 
                 print(f"Name on account: {newAccount['name']}")
-                print(f"Balance: ${newAccount['balance']}")
+                print(f"Balance: ${newAccount['balance']:.{2}f}")
                 print(f"Account Number: {newAccount['accountNumber']}")
                 
             except:
@@ -64,7 +64,7 @@ def main():
             if(account):
                 print(f"Account Number: {account['accountNumber']}")
                 print(f"Name: {account['name']}")
-                print(f"Balance: ${round(account['balance'], 2)}")
+                print(f"Balance: ${round(account['balance'], 2):.{2}f}")
 
             else:
                 print(f"Could not find account number: {accountNumber}")
@@ -88,7 +88,7 @@ def main():
                 print(e)
 
             else:
-                print(f"New Balance: ${account['balance']}")
+                print(f"New Balance: ${account['balance']:.{2}f}")
 
             wait()
 
@@ -112,7 +112,7 @@ def main():
                 print(e)
 
             else:
-                print(f"New Balance: ${account['balance']}")
+                print(f"New Balance: ${account['balance']:.{2}f}")
 
             wait()
 
@@ -159,7 +159,7 @@ def main():
                 print("New Account Created!")
                 print(f"Account Number: {acc['accountNumber']}")
                 print(f"Name: {acc['name']}")
-                print(f"Balance: ${acc['balance']}")
+                print(f"Balance: ${acc['balance']:.{2}f}")
 
             except:
                 print("New Account could not be Loaded.")
