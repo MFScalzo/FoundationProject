@@ -1,4 +1,4 @@
-from mDBControl import viewAccount, loadAccount, createAccount, deposit, withdarw, transfer, delete, disconnect, generate
+from mDBControl import viewAccount, loadAccount, createAccount, deposit, withdarw, transfer, delete, disconnect, generate, analyze
 
 def start():
     try:
@@ -10,7 +10,7 @@ def start():
         
         else:
             main()
-            
+
     except Exception as e:
         print(e)
         main()
@@ -25,6 +25,7 @@ def menu():
     print("5. Transfer")
     print("6. Delete Account")
     print("7. Load Account")
+    print("8. Analyze")
     print("0. Exit")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
@@ -180,6 +181,17 @@ def main():
             except:
                 print("New Account could not be Loaded.")
             
+            wait()
+
+        elif(optionSelected == 8):      # ANALYZE
+            print("You selected \"Analyze\".")
+            try:
+                analyze()
+
+            except Exception as e:
+                print("Error")
+                print(e)
+
             wait()
 
         else:

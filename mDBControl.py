@@ -66,7 +66,7 @@ def generate(n):
     result = db.accounts.delete_many({})
     print(f"{result.deleted_count} documents deleted.")
 
-    names = ['Mark', 'Amber', 'Todd', 'Anita', 'Sandy', 'Divna', 'Katla', 'Maynard', 'Xavier', 'Kyo', 'Alice', 'Sophie', 'Dale', 'Gus', 'Alec', 'Matt', 'Eddie']
+    names = ['Mark', 'Amber', 'Todd', 'Anita', 'Sandy', 'Divna', 'Katla', 'Maynard', 'Xavier', 'Kyo', 'Alice', 'Sophie', 'Dale', 'Gus', 'Alec', 'Matt', 'Eddie', 'Clark', 'Olivia', 'Eli']
 
     print(f"Generating {n} new bank accounts...")
 
@@ -82,3 +82,42 @@ def generate(n):
         print(f"Created {ac} of {n} as {result.inserted_id}.")
 
     print(f"Finished creating {n} bank accounts")
+
+
+def analyze():
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("What analysis do you want to generate?")
+    print("1. Largest Balance")
+    print("2. Smallest Balance")
+    print("3. Average Balance")
+    print("0. Cancel")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+    try:
+        option = int(input("Select menu option: "))
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+    except:
+        option = 0
+
+    if(option == 1): # Account with Largest Balance
+        result = db.accounts.find().sort("balance", -1).limit(1)[0]
+
+        print(f"Account Number: {result['accountNumber']}")
+        print(f"Name: {result['name']}")
+        print(f"Balance: ${result['balance']}")
+
+    if(option == 2): # Account with the Smallest Balance
+        result = db.accounts.find().sort("balance", 1).limit(1)[0]
+
+        print(f"Account Number: {result['accountNumber']}")
+        print(f"Name: {result['name']}")
+        print(f"Balance: ${result['balance']}")
+
+    if(option == 3): # Average Account Balance
+        pipeline = [{'$group': {'_id': 'null', 'avgBalance': {'$avg': '$balance'}}}]
+        result = list(db.accounts.aggregate(pipeline))
+
+        print(f"Average Account Balance: ${round(result[0]['avgBalance'], 2)}")
+
+    
