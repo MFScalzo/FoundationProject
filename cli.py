@@ -63,7 +63,8 @@ def main():
                 print(f"Balance: ${newAccount['balance']:.{2}f}")
                 print(f"Account Number: {newAccount['accountNumber']}")
                 
-            except:
+            except Exception as e:
+                print(e)
                 print("Please Enter Valid Information.")
 
             wait()

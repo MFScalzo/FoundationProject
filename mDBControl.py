@@ -23,30 +23,53 @@ def createAccount(account):
     return account
 
 def deposit(accountNumber, amount):
-    total = db.accounts.find_one({'accountNumber': accountNumber})['balance'] + amount
-    db.accounts.update_one({'accountNumber': accountNumber}, {"$set": {"balance": total}})
-    return db.accounts.find_one({'accountNumber': accountNumber})
+    account = db.accounts.find_one({'accountNumber': accountNumber})
 
-def withdarw(accountNumber, amount):
-    total = db.accounts.find_one({'accountNumber': accountNumber})['balance'] - amount
-    if (total < 0):
-        return None
-    
-    else:
+    if(account):
+        total = account['balance'] + amount
         db.accounts.update_one({'accountNumber': accountNumber}, {"$set": {"balance": total}})
         return db.accounts.find_one({'accountNumber': accountNumber})
 
-def transfer(srcAccount, targAccount, amount):
-    sourceTotal = db.accounts.find_one({'accountNumber': srcAccount})['balance'] - amount
-    targetTotal = db.accounts.find_one({'accountNumber': targAccount})['balance'] + amount
+    else:
+        raise Exception(f"Could not find account number: {accountNumber}")
 
-    if(sourceTotal < 0):
-        return None
+def withdarw(accountNumber, amount):
+    account = db.accounts.find_one({'accountNumber': accountNumber})
+
+    if(account):
+        total = account['balance'] - amount
+        if (total < 0):
+            return None
+    
+        else:
+            db.accounts.update_one({'accountNumber': accountNumber}, {"$set": {"balance": total}})
+            return db.accounts.find_one({'accountNumber': accountNumber})
 
     else:
-        db.accounts.update_one({'accountNumber': srcAccount}, {"$set": {"balance": sourceTotal}})
-        db.accounts.update_one({'accountNumber': targAccount}, {"$set": {"balance": targetTotal}})
-        return True
+        raise Exception(f"Could not find account number: {accountNumber}")
+
+def transfer(srcAccount, tarAccount, amount):
+    sourceAccount = db.accounts.find_one({'accountNumber': srcAccount})
+    targetAccount = db.accounts.find_one({'accountNumber': tarAccount})
+
+    if(sourceAccount and targetAccount):
+        sourceTotal = sourceAccount['balance'] - amount
+        targetTotal = targetAccount['balance'] + amount
+
+        if(sourceTotal < 0):
+            return None
+
+        else:
+            db.accounts.update_one({'accountNumber': srcAccount}, {"$set": {"balance": sourceTotal}})
+            db.accounts.update_one({'accountNumber': tarAccount}, {"$set": {"balance": targetTotal}})
+            return True
+
+    else:
+        if(not sourceAccount):
+            raise Exception(f"Could not find account number: {srcAccount}")
+
+        if(not targetAccount):
+            raise Exception(f"Could not find account number: {tarAccount}")
     
 
 def delete(accountNumber):
@@ -58,7 +81,10 @@ def disconnect():
 
 # This querys mongoDB and gets the next account number
 def getNextAccountNumber():
-    return db.accounts.find().sort("accountNumber", -1).limit(1)[0]["accountNumber"] + 1
+    if(db.accounts.count_documents({}) == 0):
+        return 1
+    else:
+        return db.accounts.find().sort("accountNumber", -1).limit(1)[0]["accountNumber"] + 1
 
 
 def generate(n):
