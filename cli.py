@@ -1,4 +1,19 @@
-from mDBControl import viewAccount, loadAccount, createAccount, deposit, withdarw, transfer, delete, disconnect
+from mDBControl import viewAccount, loadAccount, createAccount, deposit, withdarw, transfer, delete, disconnect, generate
+
+def start():
+    try:
+        option = int(input("Clear all bank accounts and generate new ones? "))
+        if(option == 1):
+            number = int(input("How many should be generated? "))
+            generate(number)
+            main()
+        
+        else:
+            main()
+            
+    except Exception as e:
+        print(e)
+        main()
 
 def menu():
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -174,4 +189,4 @@ def wait():
     input("Enter to continue...")
 
 if __name__ == "__main__":
-    main()
+    start()

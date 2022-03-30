@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from random import randint
 import json
 
 client = MongoClient()
@@ -59,3 +60,25 @@ def disconnect():
 def getNextAccountNumber():
     return db.accounts.find().sort("accountNumber", -1).limit(1)[0]["accountNumber"] + 1
 
+
+def generate(n):
+    print("Deleting all bank accounts in Database...")
+    result = db.accounts.delete_many({})
+    print(f"{result.deleted_count} documents deleted.")
+
+    names = ['Mark', 'Amber', 'Todd', 'Anita', 'Sandy', 'Divna', 'Katla', 'Maynard', 'Xavier', 'Kyo', 'Alice', 'Sophie', 'Dale', 'Gus', 'Alec', 'Matt', 'Eddie']
+
+    print(f"Generating {n} new bank accounts...")
+
+    for ac in range(1,n+1):
+        account = {
+            'accountNumber' : ac,
+            'name' : names[randint(0, (len(names)-1))],
+            'balance' : randint(0, 10000) + (randint(0, 99) * 0.01)
+        }
+
+        result = db.accounts.insert_one(account)
+
+        print(f"Created {ac} of {n} as {result.inserted_id}.")
+
+    print(f"Finished creating {n} bank accounts")
