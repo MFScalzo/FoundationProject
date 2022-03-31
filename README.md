@@ -18,3 +18,4 @@ In it's own terminal window:
 
 ### Notes
 - Make sure any .json files you try to load are in the same directory as cli.py
+- Make sure you have pymongo installed
