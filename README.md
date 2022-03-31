@@ -5,7 +5,9 @@ A Python CLI (Command Line Interface) application for a Bank Teller. This applic
 ### Usage
 > Start MongoDB Server
 
-In a seperate terminal window:
+Make sure the server is running before starting the program.
+
+In it's own terminal window:
 `mongod.exe`
 
 > Start Program
