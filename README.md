@@ -1,4 +1,4 @@
-# Revature Foundation Project 2022 BigData
+# Foundation Project 2022 BigData
 
 A Python CLI (Command Line Interface) application for a Bank Teller. This application allows the user to Create, View, Delete, and Analyze Bank Accounts stored in a MongoDB database. It also provides the functionality to Deposit, Withdraw, and Transfer funds between the bank accounts. Finally, you can also Load Bank Account info from a JSON file.
 
