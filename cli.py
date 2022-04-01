@@ -202,5 +202,5 @@ def wait():
     input("Enter to continue...")
 
 if __name__ == "__main__":
-    #start()
+    #start()  uncomment this and comment out below line to enable feature to autimatically generate accounts
     main()
