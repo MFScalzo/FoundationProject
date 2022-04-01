@@ -202,4 +202,5 @@ def wait():
     input("Enter to continue...")
 
 if __name__ == "__main__":
-    start()
+    #start()
+    main()

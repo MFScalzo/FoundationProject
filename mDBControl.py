@@ -110,39 +110,43 @@ def generate(n):
 
 
 def analyze():
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    print("What analysis do you want to generate?")
-    print("1. Largest Balance")
-    print("2. Smallest Balance")
-    print("3. Average Balance")
-    print("0. Cancel")
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-
-    try:
-        option = int(input("Select menu option: "))
+    while(True):
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        print("What analysis do you want to generate?")
+        print("1. Largest Balance")
+        print("2. Smallest Balance")
+        print("3. Average Balance")
+        print("0. Exit")
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
-    except:
-        option = 0
+        try:
+            option = int(input("Select menu option: "))
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
-    if(option == 1): # Account with Largest Balance
-        result = db.accounts.find().sort("balance", -1).limit(1)[0]
+        except:
+            option = 0
 
-        print(f"Account Number: {result['accountNumber']}")
-        print(f"Name: {result['name']}")
-        print(f"Balance: ${result['balance']}")
+        if(option == 1): # Account with Largest Balance
+            result = db.accounts.find().sort("balance", -1).limit(1)[0]
 
-    if(option == 2): # Account with the Smallest Balance
-        result = db.accounts.find().sort("balance", 1).limit(1)[0]
+            print(f"Account Number: {result['accountNumber']}")
+            print(f"Name: {result['name']}")
+            print(f"Balance: ${result['balance']}")
 
-        print(f"Account Number: {result['accountNumber']}")
-        print(f"Name: {result['name']}")
-        print(f"Balance: ${result['balance']}")
+        if(option == 2): # Account with the Smallest Balance
+            result = db.accounts.find().sort("balance", 1).limit(1)[0]
 
-    if(option == 3): # Average Account Balance
-        pipeline = [{'$group': {'_id': 'null', 'avgBalance': {'$avg': '$balance'}}}]
-        result = list(db.accounts.aggregate(pipeline))
+            print(f"Account Number: {result['accountNumber']}")
+            print(f"Name: {result['name']}")
+            print(f"Balance: ${result['balance']}")
 
-        print(f"Average Account Balance: ${round(result[0]['avgBalance'], 2)}")
+        if(option == 3): # Average Account Balance
+            pipeline = [{'$group': {'_id': 'null', 'avgBalance': {'$avg': '$balance'}}}]
+            result = list(db.accounts.aggregate(pipeline))
+
+            print(f"Average Account Balance: ${round(result[0]['avgBalance'], 2)}")
+
+        if(option == 0):
+            break
 
     
