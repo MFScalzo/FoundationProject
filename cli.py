@@ -155,7 +155,7 @@ def main():
                 print(e)
 
             else:
-                print(f"${amount} transfered from account {sourceAccount} to account {targetAccount}.")
+                print(f"${amount:.{2}f} transfered from account {sourceAccount} to account {targetAccount}.")
 
             wait()
 
